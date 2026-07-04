@@ -1,0 +1,27 @@
+name: PotRemote
+options:
+  bundleIdPrefix: com.example
+  deploymentTarget:
+    iOS: "26.0"
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    # Подпись при сборке в CI отключена — приложение подписывается
+    # позже на устройстве (ESign). Team/сертификат здесь не нужны.
+    CODE_SIGN_STYLE: Manual
+    CODE_SIGNING_REQUIRED: "NO"
+    CODE_SIGNING_ALLOWED: "NO"
+targets:
+  PotRemote:
+    type: application
+    platform: iOS
+    sources: [PotRemote]
+    info:
+      path: PotRemote/Info.plist
+    settings:
+      base:
+        # Может быть любым — реальный bundle ID подставит ESign из вашего
+        # .mobileprovision при подписи на телефоне.
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.potremote
+        TARGETED_DEVICE_FAMILY: "1"
+        INFOPLIST_KEY_UIUserInterfaceStyle: Dark
