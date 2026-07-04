@@ -45,6 +45,7 @@ jobs:
       # xcpretty не используем, чтобы не резать вывод error:.
       - name: Build (no signing)
         run: |
+          mkdir -p build
           set -o pipefail
           xcodebuild build \
             -project ios/PotRemote.xcodeproj \
@@ -64,7 +65,12 @@ jobs:
         if: failure()
         run: |
           echo "======== СТРОКИ ОШИБОК (скопируйте этот блок) ========"
-          grep -E "error:|warning: .*unavailable|is only available" build/xcodebuild.log | head -n 60 || true
+          if [ -f build/xcodebuild.log ]; then
+            grep -E "error:|unable to type-check|is only available|unavailable|cannot find|has no member" \
+              build/xcodebuild.log | head -n 80 || echo "(строк error: не найдено — пришлите артефакт build-log)"
+          else
+            echo "(лог не создан — сборка упала до компиляции; смотрите вывод шага Build выше)"
+          fi
           echo "======================================================"
 
       - name: Package unsigned IPA
