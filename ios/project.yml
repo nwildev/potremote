@@ -18,10 +18,21 @@ targets:
     sources: [PotRemote]
     info:
       path: PotRemote/Info.plist
+      # Эти свойства XcodeGen запишет в генерируемый Info.plist.
+      # UILaunchScreen обязателен — без него iOS запускает приложение
+      # в режиме совместимости (чёрные полосы, неверное разрешение).
+      properties:
+        CFBundleDisplayName: PotRemote
+        UILaunchScreen: {}
+        UIUserInterfaceStyle: Dark
+        NSLocalNetworkUsageDescription: "Приложению нужен доступ к локальной сети для управления PotPlayer на вашем ПК."
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
     settings:
       base:
         # Может быть любым — реальный bundle ID подставит ESign из вашего
         # .mobileprovision при подписи на телефоне.
         PRODUCT_BUNDLE_IDENTIFIER: com.example.potremote
         TARGETED_DEVICE_FAMILY: "1"
-        INFOPLIST_KEY_UIUserInterfaceStyle: Dark

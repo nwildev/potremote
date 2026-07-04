@@ -5,9 +5,7 @@ struct PlaylistView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
-                AmbientBackground()
-
+            Group {
                 if vm.playlist.isEmpty {
                     ContentUnavailableView(
                         "Плейлист пуст",
@@ -28,6 +26,8 @@ struct PlaylistView: View {
                     }
                 }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(AmbientBackground())
             .navigationTitle("Плейлист")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {

@@ -7,54 +7,51 @@ struct ControlsView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
-                AmbientBackground()
+            ScrollView {
+                VStack(alignment: .leading, spacing: 28) {
 
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 28) {
-
-                        SectionHeader("Соотношение сторон")
-                        LazyVGrid(columns: columns, spacing: 12) {
-                            ForEach(AspectRatio.allCases) { aspect in
-                                Button {
-                                    vm.setAspect(aspect)
-                                } label: {
-                                    VStack(spacing: 8) {
-                                        Image(systemName: aspect.icon)
-                                            .font(.title3)
-                                        Text(aspect.label)
-                                            .font(.caption)
-                                    }
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: 74)
+                    SectionHeader("Соотношение сторон")
+                    LazyVGrid(columns: columns, spacing: 12) {
+                        ForEach(AspectRatio.allCases) { aspect in
+                            Button {
+                                vm.setAspect(aspect)
+                            } label: {
+                                VStack(spacing: 8) {
+                                    Image(systemName: aspect.icon)
+                                        .font(.title3)
+                                    Text(aspect.label)
+                                        .font(.caption)
                                 }
-                                .buttonStyle(.glass)
-                                .buttonBorderShape(.roundedRectangle(radius: 20))
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 74)
                             }
-                        }
-
-                        SectionHeader("Скорость воспроизведения")
-                        GlassEffectContainer(spacing: 12) {
-                            HStack(spacing: 12) {
-                                SpeedButton(icon: "tortoise.fill", label: "−0.1x") { vm.speedDown() }
-                                SpeedButton(icon: "arrow.counterclockwise", label: "1.0x") { vm.speedReset() }
-                                SpeedButton(icon: "hare.fill", label: "+0.1x") { vm.speedUp() }
-                            }
-                        }
-
-                        SectionHeader("Экран и звук")
-                        VStack(spacing: 12) {
-                            WideActionButton(icon: "arrow.up.left.and.arrow.down.right",
-                                             title: "Полный экран") { vm.fullscreen() }
-                            WideActionButton(icon: "speaker.slash.fill",
-                                             title: "Без звука") { vm.mute() }
-                            WideActionButton(icon: "stop.fill",
-                                             title: "Остановить воспроизведение") { vm.stop() }
+                            .buttonStyle(.glass)
+                            .buttonBorderShape(.roundedRectangle(radius: 20))
                         }
                     }
-                    .padding()
+
+                    SectionHeader("Скорость воспроизведения")
+                    GlassEffectContainer(spacing: 12) {
+                        HStack(spacing: 12) {
+                            SpeedButton(icon: "tortoise.fill", label: "−0.1x") { vm.speedDown() }
+                            SpeedButton(icon: "arrow.counterclockwise", label: "1.0x") { vm.speedReset() }
+                            SpeedButton(icon: "hare.fill", label: "+0.1x") { vm.speedUp() }
+                        }
+                    }
+
+                    SectionHeader("Экран и звук")
+                    VStack(spacing: 12) {
+                        WideActionButton(icon: "arrow.up.left.and.arrow.down.right",
+                                         title: "Полный экран") { vm.fullscreen() }
+                        WideActionButton(icon: "speaker.slash.fill",
+                                         title: "Без звука") { vm.mute() }
+                        WideActionButton(icon: "stop.fill",
+                                         title: "Остановить воспроизведение") { vm.stop() }
+                    }
                 }
+                .padding()
             }
+            .background(AmbientBackground())
             .navigationTitle("Управление")
         }
     }
